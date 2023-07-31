@@ -2,7 +2,8 @@
   "expo": {
     "name": "Tebble",
     "slug": "Tebble",
-    "version": "1.0.0",
+    "owner": "infernalestube",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,10 +22,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "de.infernalestube.tebble"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d3976411-8469-43e4-a4e1-33d1a9af8208"
+      }
     }
   }
 }
