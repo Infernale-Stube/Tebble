@@ -23,6 +23,10 @@ export default function Menu() {
   const navigateToHighscore = () => {
     navigation.navigate('Highscore');
   };
+
+  const navigateToGame = () => {
+    navigation.navigate('Game');
+  };
   
   return (
     <View style={globalStyles.container}>
@@ -37,7 +41,7 @@ export default function Menu() {
           <Text style={[menuStyles.buttonText, { color: "#999" }]}>Campaign Mode</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={menuStyles.button}>
+        <TouchableOpacity style={menuStyles.button} onPress={navigateToGame}>
           <Text style={menuStyles.buttonText}>Random Mode</Text>
         </TouchableOpacity>
 

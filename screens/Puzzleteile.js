@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { PuzzlePiece } from "../components/figures";
+import { DraggablePiece } from "../components/figures";
 import { pieces } from "../components/figures";
 
 export default function Puzzleteile() {
@@ -11,7 +11,7 @@ export default function Puzzleteile() {
         <View key={rowIndex} style={styles.row}>
           {pieceKeys.slice(rowIndex * 3, rowIndex * 3 + 3).map((key, colIndex) => (
             <View key={colIndex} style={styles.cell}>
-              <PuzzlePiece piece={pieces[key]} />
+              <DraggablePiece piece={pieces[key]} />
             </View>
           ))}
         </View>

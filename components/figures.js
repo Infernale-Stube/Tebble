@@ -1,6 +1,46 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, StyleSheet, PanResponder, Animated, TouchableOpacity, Dimensions } from 'react-native';
 import { globalStyles, aboutStyles } from '../styles';
+
+export const DraggablePiece = ({ piece }) => {
+  const [angle, setAngle] = useState(0);
+  const pan = useState(new Animated.ValueXY())[0];
+
+  const rotate = () => {
+    setAngle((prevAngle) => (prevAngle + 90) % 360);
+  };
+
+  const panResponder = PanResponder.create({
+    onMoveShouldSetPanResponder: () => true,
+    onPanResponderGrant: (e, gestureState) => {
+      pan.setOffset({ x: pan.x._value, y: pan.y._value });
+      pan.setValue({ x: 0, y: 0 });
+    },
+    onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
+      useNativeDriver: false,
+    }),
+    onPanResponderRelease: (e, gestureState) => {
+      pan.flattenOffset();
+    },
+    onPanResponderTerminate: (e, gestureState) => {
+      pan.flattenOffset();
+    },
+    onPanResponderTerminationRequest: (e, gestureState) => true,
+  });
+
+  return (
+    <Animated.View
+      {...panResponder.panHandlers}
+      style={{
+        transform: [{ translateX: pan.x }, { translateY: pan.y }, { rotate: `${angle}deg` }],
+      }}
+    >
+      <TouchableOpacity onPress={rotate}>
+        <PuzzlePiece piece={piece} />
+      </TouchableOpacity>
+    </Animated.View>
+  );
+};
 
 export const PuzzlePiece = ({ piece }) => {
   return (
