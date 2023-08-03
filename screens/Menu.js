@@ -15,6 +15,14 @@ export default function Menu() {
   const navigateToSettings = () => {
     navigation.navigate('Settings');
   };
+
+  const navigateToPuzzleteile = () => {
+    navigation.navigate('Puzzleteile');
+  };
+
+  const navigateToHighscore = () => {
+    navigation.navigate('Highscore');
+  };
   
   return (
     <View style={globalStyles.container}>
@@ -33,17 +41,21 @@ export default function Menu() {
           <Text style={menuStyles.buttonText}>Random Mode</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={menuStyles.button}>
-          <Text style={menuStyles.buttonText}>Highscore</Text>
+        <TouchableOpacity style={menuStyles.button} onPress={navigateToPuzzleteile}>
+          <Text style={menuStyles.buttonText}>Puzzleteile Übersicht</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={menuStyles.button} onPress={navigateToAbout}>
+       {/*  <TouchableOpacity style={menuStyles.button} onPress={navigateToHighscore}>
+          <Text style={menuStyles.buttonText}>Highscore</Text>
+        </TouchableOpacity> //--> findet Screen Highscore nicht */}
+
+       {/*  <TouchableOpacity style={menuStyles.button} onPress={navigateToAbout}>
           <Text style={menuStyles.buttonText}>About</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={menuStyles.button} onPress={navigateToSettings}>
           <Text style={menuStyles.buttonText}>Settings</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
