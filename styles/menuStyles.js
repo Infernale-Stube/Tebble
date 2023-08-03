@@ -16,8 +16,8 @@ const menuStyles = StyleSheet.create({
     width: 150,
   },
   title: {
+    fontFamily: "BungeeSpice",
     fontSize: 50,
-    fontWeight: 'bold',
   },
   buttonContainer: {
     flex: 3,
