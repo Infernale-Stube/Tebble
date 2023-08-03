@@ -5,7 +5,7 @@ import { globalStyles, menuStyles } from "../styles"
 import { useNavigation } from '@react-navigation/native';
 
 export default function Menu() {
-  
+
   const navigation = useNavigation();
 
   const navigateToAbout = () => {
@@ -18,18 +18,23 @@ export default function Menu() {
   
   return (
     <View style={globalStyles.container}>
-      <View style={menuStyles.logoContainer}>
-        <Image source={require('../assets/icon.png')} style={menuStyles.logo}/>
+      <View style={menuStyles.logoTitleContainer}>
+        <Image source={require('../assets/placeholder.png')} style={menuStyles.logo}/>
+        <Text style={menuStyles.title}>Tebble</Text>
       </View>
 
       <View style={menuStyles.buttonContainer}>
         <TouchableOpacity style={menuStyles.button}>
         
-          <Text style={menuStyles.buttonText}>Campaign Mode</Text>
+          <Text style={[menuStyles.buttonText, { color: "#999" }]}>Campaign Mode</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={menuStyles.button}>
           <Text style={menuStyles.buttonText}>Random Mode</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={menuStyles.button}>
+          <Text style={menuStyles.buttonText}>Highscore</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={menuStyles.button} onPress={navigateToAbout}>
