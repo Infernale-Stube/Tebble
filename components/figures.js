@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { View, StyleSheet, PanResponder, Animated, TouchableOpacity, Dimensions } from 'react-native';
 import { globalStyles, aboutStyles } from '../styles';
 
+const cellSize=30
+
 export const DraggablePiece = ({ piece }) => {
   const [angle, setAngle] = useState(0);
   const pan = useState(new Animated.ValueXY())[0];
@@ -20,6 +22,14 @@ export const DraggablePiece = ({ piece }) => {
       useNativeDriver: false,
     }),
     onPanResponderRelease: (e, gestureState) => {
+      const snapX = Math.round(gestureState.dx / cellSize) * cellSize;
+      const snapY = Math.round(gestureState.dy / cellSize) * cellSize;
+
+      Animated.spring(pan, {
+        toValue: { x: snapX, y: snapY },
+        useNativeDriver: false,
+      }).start();
+
       pan.flattenOffset();
     },
     onPanResponderTerminate: (e, gestureState) => {
@@ -30,11 +40,13 @@ export const DraggablePiece = ({ piece }) => {
 
   return (
     <Animated.View
-      {...panResponder.panHandlers}
-      style={{
-        transform: [{ translateX: pan.x }, { translateY: pan.y }, { rotate: `${angle}deg` }],
-      }}
-    >
+    {...panResponder.panHandlers}
+    style={{
+      transform: [{ translateX: pan.x }, { translateY: pan.y }, { rotate: `${angle}deg` }],
+      width: cellSize,
+      height: cellSize
+    }}
+  >
       <TouchableOpacity onPress={rotate}>
         <PuzzlePiece piece={piece} />
       </TouchableOpacity>
@@ -43,6 +55,8 @@ export const DraggablePiece = ({ piece }) => {
 };
 
 export const PuzzlePiece = ({ piece }) => {
+  const scaledCellSize = cellSize /* / Math.max(piece.length, ...piece.map(row => row.length)); */
+  
   return (
     <View style={styles.piece}>
       {piece.map((row, rowIndex) => (
@@ -56,6 +70,8 @@ export const PuzzlePiece = ({ piece }) => {
   );
 };
 
+
+
 const styles = StyleSheet.create({
   piece: {
     flexDirection: 'column',
@@ -64,9 +80,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   cell: {
-    width: 20,
-    height: 20,
-    borderWidth: 1,
+    width: cellSize,
+    height: cellSize,
+    borderWidth: 0.5,
     borderColor: 'transparent',
   },
   filledCell: {
