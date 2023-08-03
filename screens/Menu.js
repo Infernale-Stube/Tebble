@@ -19,7 +19,7 @@ export default function Menu() {
   return (
     <View style={globalStyles.container}>
       <View style={menuStyles.logoTitleContainer}>
-        <Image source={require('../assets/placeholder.png')} style={menuStyles.logo}/>
+        <Image source={require('../assets/images/placeholder.png')} style={menuStyles.logo}/>
         <Text style={menuStyles.title}>Tebble</Text>
       </View>
 
