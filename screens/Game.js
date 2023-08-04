@@ -3,18 +3,27 @@ import { View, PanResponder, StyleSheet, Animated, TouchableOpacity } from 'reac
 import { pieces } from "../components/figures";
 import { gridData } from "../components/Grids";
 
-
 export default function Game() {
-  const [piece, setPiece] = useState(pieces.piece2); //change the piece to be used here, goal is to spawn in multiple pieces at once, logic for that is still missing
-  const pan = useRef(new Animated.ValueXY()).current;
-  const rotatePiece = (currentPiece) => {
-    const newPiece = currentPiece.map((row, rowIndex) =>
-      currentPiece.map((col) => col[rowIndex])
-    ).reverse();
-    setPiece(newPiece);
+  const pieceNames = ['piece1', 'piece2', 'piece4']; // define the pieces to be spawned
+  const [currentGrid, setCurrentGrid] = useState('grid2'); // define the grid to be displayed
+  const [activePieces, setActivePieces] = useState(pieceNames.map(name => ({
+    piece: pieces[name],
+    pan: useRef(new Animated.ValueXY()).current,
+    lastTap: null,
+  })));
+
+  const rotatePiece = (index) => {
+    setActivePieces(pieces => pieces.map((p, i) => {
+      if (i !== index) return p;
+      return {
+        ...p,
+        piece: p.piece.map((row, rowIndex) => p.piece.map((col) => col[rowIndex])).reverse()
+      };
+    }));
   };
-  const renderPiece = (currentPiece) => {
-    return currentPiece.map((row, rowIndex) => (
+
+  const renderPiece = (currentPiece) => (
+    currentPiece.map((row, rowIndex) => (
       <View key={rowIndex} style={{ flexDirection: 'row' }}>
         {row.map((cell, colIndex) => (
           <View
@@ -22,47 +31,16 @@ export default function Game() {
             style={{
               width: 30,
               height: 30,
-              backgroundColor: cell ? 'red' : 'transparent', //define color of pieces
+              backgroundColor: cell ? 'red' : 'transparent', // define color of pieces
             }}
           />
         ))}
       </View>
-    ));
-  };
+    ))
+  );
 
-  const [lastTap, setLastTap] = useState(null); //to recognize doubletaps
-
-//responding on touch for dragging and rotating
-  const panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onPanResponderGrant: (e, gestureState) => {
-      const now = Date.now();
-      if (lastTap && (now - lastTap) < 200) {
-        rotatePiece(piece);
-      }
-      setLastTap(now);
-  
-      pan.setOffset({ x: pan.x._value, y: pan.y._value });
-      pan.setValue({ x: 0, y: 0 });
-    },
-    onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
-      useNativeDriver: false,
-    }),
-    onPanResponderRelease: () => {
-      pan.flattenOffset();
-      const snapToValue = {
-        x: Math.round(pan.x._value / 30) * 30,
-        y: Math.round(pan.y._value / 30) * 30,
-      };
-  
-      Animated.spring(pan, {
-        toValue: snapToValue,
-        useNativeDriver: false,
-      }).start();
-    },
-  });
-  const renderGrid = () => {
-    return gridData.grid1.map((row, rowIndex) => ( //change grid1
+  const renderGrid = () => (
+    gridData[currentGrid].map((row, rowIndex) => ( //gridchoice
       <View key={rowIndex} style={styles.row}>
         {row.map((cell, colIndex) => (
           <View
@@ -77,29 +55,58 @@ export default function Game() {
           />
         ))}
       </View>
-    ));
-  };
-  
+    ))
+  );
 
-  //dynamic calculation of gridsize
-  const gridWidth = 30 * gridData.grid1[0].length; //change grid1
-  const gridHeight = 30 * gridData.grid1.length; //change grid1
+  // dynamic calculation of gridsize
+  const gridWidth = 30 * gridData[currentGrid][0].length; //gridchoice
+  const gridHeight = 30 * gridData[currentGrid].length; //gridchoice
 
   return (
     <View style={styles.container}>
       <View style={[styles.grid, { width: gridWidth, height: gridHeight }]}>
         {renderGrid()}
-        <Animated.View
-          {...panResponder.panHandlers}
-          style={[pan.getLayout(), styles.pieceContainer]}
-        >
-          {renderPiece(piece)}
-        </Animated.View>
+        {activePieces.map((p, index) => {
+          const panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: () => true,
+            onPanResponderGrant: () => {
+              const now = Date.now();
+              if (p.lastTap && (now - p.lastTap) < 200) {
+                rotatePiece(index);
+              }
+              p.pan.setOffset({ x: p.pan.x._value, y: p.pan.y._value });
+              p.pan.setValue({ x: 0, y: 0 });
+              p.lastTap = now;
+            },
+            onPanResponderMove: Animated.event([null, { dx: p.pan.x, dy: p.pan.y }], {
+              useNativeDriver: false,
+            }),
+            onPanResponderRelease: () => {
+              p.pan.flattenOffset();
+              const snapToValue = {
+                x: Math.round(p.pan.x._value / 30) * 30,
+                y: Math.round(p.pan.y._value / 30) * 30,
+              };
+              Animated.spring(p.pan, {
+                toValue: snapToValue,
+                useNativeDriver: false,
+              }).start();
+            },
+          });
+          return (
+            <Animated.View
+              key={index}
+              {...panResponder.panHandlers}
+              style={[p.pan.getLayout(), styles.pieceContainer]}
+            >
+              {renderPiece(p.piece)}
+            </Animated.View>
+          );
+        })}
       </View>
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   pieceContainer: {
