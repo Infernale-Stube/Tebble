@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { View, PanResponder, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import { pieces } from "../components/figures";
+import { gridData } from "../components/Grids";
+
 
 export default function Game() {
   const [piece, setPiece] = useState(pieces.piece2); //change the piece to be used here, goal is to spawn in multiple pieces at once, logic for that is still missing
@@ -59,16 +61,34 @@ export default function Game() {
       }).start();
     },
   });
+  const renderGrid = () => {
+    return gridData.grid1.map((row, rowIndex) => ( //change grid1
+      <View key={rowIndex} style={styles.row}>
+        {row.map((cell, colIndex) => (
+          <View
+            key={colIndex}
+            style={[
+              styles.cell,
+              {
+                backgroundColor: cell ? 'transparent' : 'transparent',
+                opacity: cell ? 1 : 0,
+              },
+            ]}
+          />
+        ))}
+      </View>
+    ));
+  };
+  
+
+  //dynamic calculation of gridsize
+  const gridWidth = 30 * gridData.grid1[0].length; //change grid1
+  const gridHeight = 30 * gridData.grid1.length; //change grid1
+
   return (
     <View style={styles.container}>
-      <View style={styles.grid}>
-        {[...Array(10).keys()].map((_, rowIndex) => (
-          <View key={rowIndex} style={styles.row}>
-            {[...Array(10).keys()].map((_, colIndex) => (
-              <View key={colIndex} style={styles.cell} />
-            ))}
-          </View>
-        ))}
+      <View style={[styles.grid, { width: gridWidth, height: gridHeight }]}>
+        {renderGrid()}
         <Animated.View
           {...panResponder.panHandlers}
           style={[pan.getLayout(), styles.pieceContainer]}
