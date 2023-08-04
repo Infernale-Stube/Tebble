@@ -1,11 +1,19 @@
 import React, { useRef, useState } from 'react';
-import { View, PanResponder, StyleSheet, Animated } from 'react-native';
+import { View, PanResponder, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import { pieces } from "../components/figures";
 
 export default function Game() {
+  const [piece, setPiece] = useState(pieces.piece2);
+  const pan = useRef(new Animated.ValueXY()).current;
 
-  function renderPiece(piece) {
-    return piece.map((row, rowIndex) => (
+  const rotatePiece = (currentPiece) => {
+    const newPiece = currentPiece.map((row, rowIndex) =>
+      currentPiece.map((col) => col[rowIndex])
+    ).reverse();
+    setPiece(newPiece);
+  };
+  const renderPiece = (currentPiece) => {
+    return currentPiece.map((row, rowIndex) => (
       <View key={rowIndex} style={{ flexDirection: 'row' }}>
         {row.map((cell, colIndex) => (
           <View
@@ -13,19 +21,18 @@ export default function Game() {
             style={{
               width: 30,
               height: 30,
-              backgroundColor: cell ? 'blue' : 'transparent',
+              backgroundColor: cell ? 'red' : 'transparent',
             }}
           />
         ))}
       </View>
     ));
-  }
-
-  const pan = useRef(new Animated.ValueXY()).current;
+  };
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderGrant: () => {
+      rotatePiece(piece); // Stück drehen, wenn berührt
       pan.setOffset({ x: pan.x._value, y: pan.y._value });
       pan.setValue({ x: 0, y: 0 });
     },
@@ -38,14 +45,13 @@ export default function Game() {
         x: Math.round(pan.x._value / 30) * 30,
         y: Math.round(pan.y._value / 30) * 30,
       };
-
+  
       Animated.spring(pan, {
         toValue: snapToValue,
         useNativeDriver: false,
       }).start();
     },
   });
-
   return (
     <View style={styles.container}>
       <View style={styles.grid}>
@@ -57,15 +63,16 @@ export default function Game() {
           </View>
         ))}
         <Animated.View
-  {...panResponder.panHandlers}
-  style={[pan.getLayout(), styles.pieceContainer]}
->
-  {renderPiece(pieces.piece2)}
-</Animated.View>
+          {...panResponder.panHandlers}
+          style={[pan.getLayout(), styles.pieceContainer]}
+        >
+          {renderPiece(piece)}
+        </Animated.View>
       </View>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   pieceContainer: {
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
   square: {
     width: 60,
     height: 60,
-    backgroundColor: 'red',
+    backgroundColor: 'blue',
     position: 'absolute',
   },
 });
