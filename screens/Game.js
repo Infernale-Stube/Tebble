@@ -23,24 +23,16 @@ const Game = () => {
     return rows;
   };
 
-  const pieceKeys = Object.keys(pieces);
-
   return (
     <View style={styles.container}>
       <View style={styles.gridContainer}>
         {renderGrid()}
       </View>
-      <View style={styles.puzzleContainer}>
-  {Array.from({ length: Math.ceil(pieceKeys.length / 3) }, (_, rowIndex) => (
-    <View key={rowIndex} style={styles.puzzleRow}>
-      {pieceKeys.slice(rowIndex * 3, rowIndex * 3 + 3).map((key, colIndex) => (
-        <View key={colIndex} style={styles.pieceCell}>
-        <DraggablePiece piece={pieces[key]} />
+      {Object.keys(pieces).map((key, index) => (
+        <View key={index} style={styles.pieceCell}>
+          <DraggablePiece piece={pieces[key]} initialX={(index % 3) * cellSize} initialY={Math.floor(index / 3) * cellSize} />
         </View>
       ))}
-    </View>
-  ))}
-</View>
     </View>
   );
 }
@@ -54,19 +46,14 @@ const styles = StyleSheet.create({
     flex: 3,
     padding: 10,
   },
-  puzzleContainer: {
+  piecesContainer: {
     flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-around',
   },
   row: {
     flexDirection: 'row',
-  },
-  puzzleRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 10,
   },
   cell: {
     width: cellSize,
@@ -78,10 +65,9 @@ const styles = StyleSheet.create({
     width: cellSize,
     height: cellSize,
     borderWidth: 0.5,
-    borderColor: 'transparent',
+    borderColor: 'blue', //change to transparent again after debugging
     margin: 10,
   },
 });
-
 
 export default Game;
