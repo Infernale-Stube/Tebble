@@ -3,9 +3,8 @@ import { View, PanResponder, StyleSheet, Animated, TouchableOpacity } from 'reac
 import { pieces } from "../components/figures";
 
 export default function Game() {
-  const [piece, setPiece] = useState(pieces.piece2);
+  const [piece, setPiece] = useState(pieces.piece2); //change the piece to be used here, goal is to spawn in multiple pieces at once, logic for that is still missing
   const pan = useRef(new Animated.ValueXY()).current;
-
   const rotatePiece = (currentPiece) => {
     const newPiece = currentPiece.map((row, rowIndex) =>
       currentPiece.map((col) => col[rowIndex])
@@ -21,7 +20,7 @@ export default function Game() {
             style={{
               width: 30,
               height: 30,
-              backgroundColor: cell ? 'red' : 'transparent',
+              backgroundColor: cell ? 'red' : 'transparent', //define color of pieces
             }}
           />
         ))}
@@ -29,10 +28,18 @@ export default function Game() {
     ));
   };
 
+  const [lastTap, setLastTap] = useState(null); //to recognize doubletaps
+
+//responding on touch for dragging and rotating
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
-    onPanResponderGrant: () => {
-      rotatePiece(piece);
+    onPanResponderGrant: (e, gestureState) => {
+      const now = Date.now();
+      if (lastTap && (now - lastTap) < 200) {
+        rotatePiece(piece);
+      }
+      setLastTap(now);
+  
       pan.setOffset({ x: pan.x._value, y: pan.y._value });
       pan.setValue({ x: 0, y: 0 });
     },
@@ -96,11 +103,5 @@ const styles = StyleSheet.create({
     height: 30,
     borderColor: 'black',
     borderWidth: 0.5,
-  },
-  square: {
-    width: 60,
-    height: 60,
-    backgroundColor: 'blue',
-    position: 'absolute',
   },
 });
