@@ -4,7 +4,7 @@ import { pieces } from "../components/figures";
 
 export default function Puzzleteile() {
   const pieceKeys = Object.keys(pieces);
-  const piecesInRows = splitIntoRows(pieceKeys, 3);
+  const piecesInRows = splitIntoRows(pieceKeys, 5);
 
   return (
     <View style={styles.container}>
@@ -36,8 +36,8 @@ const renderPiece = (currentPiece) => {
         <View
           key={colIndex}
           style={{
-            width: 30,
-            height: 30,
+            width: 25,
+            height: 25,
             backgroundColor: cell ? 'red' : 'transparent',
           }}
         />
