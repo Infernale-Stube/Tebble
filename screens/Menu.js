@@ -54,7 +54,6 @@ export default function Menu() {
         </TouchableOpacity> //--> findet Screen Highscore nicht */}
 
        {/*  <TouchableOpacity style={menuStyles.button} onPress={navigateToAbout}>
-
           <Text style={menuStyles.buttonText}>About</Text>
         </TouchableOpacity>
 
