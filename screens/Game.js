@@ -32,7 +32,7 @@ export default function Game() {
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderGrant: () => {
-      rotatePiece(piece); // Stück drehen, wenn berührt
+      rotatePiece(piece);
       pan.setOffset({ x: pan.x._value, y: pan.y._value });
       pan.setValue({ x: 0, y: 0 });
     },
