@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Pieces } from "../components/Pieces";
 
-export default function Puzzleteile() {
+export default function Overview() {
   const pieceKeys = Object.keys(Pieces);
   const piecesInRows = splitIntoRows(pieceKeys, 5);
 
