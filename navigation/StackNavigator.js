@@ -15,6 +15,7 @@ function StackNavigator() {
         <Stack.Screen name="Settings" options={{ headerShown: false }} component={Settings} />
         <Stack.Screen name="Game" options={{ headerShown: false }} component={Game} />
         <Stack.Screen name="About" options={{ headerShown: false }} component={About} />
+        <Stack.Screen name="Highscore" options={{ headerShown: false }} component={Highscore} />
         <Stack.Screen name="Puzzleteile" options={{ headerShown: false }} component={Puzzleteile} />
       </Stack.Navigator>
     </NavigationContainer>
