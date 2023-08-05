@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { globalStyles, hishscoreStyles } from '../styles'
+import { globalStyles, highscoreStyles } from '../styles'
 
 export default function Highscore() {
   return (

@@ -1,19 +1,19 @@
 import React, { useRef, useState } from 'react';
-import { View, PanResponder, StyleSheet, Animated, TouchableOpacity } from 'react-native';
-import { pieces } from "../components/figures";
-import { gridData } from "../components/Grids";
+import { View, PanResponder, StyleSheet, Animated } from 'react-native';
+import { Pieces } from "../components/Pieces";
+import { Grids } from "../components/Grids";
 
 export default function Game() {
   const pieceNames = ['piece1', 'piece2', 'piece4']; // define the pieces to be spawned
   const [currentGrid, setCurrentGrid] = useState('grid2'); // define the grid to be displayed
   const [activePieces, setActivePieces] = useState(pieceNames.map(name => ({
-    piece: pieces[name],
+    piece: Pieces[name],
     pan: useRef(new Animated.ValueXY()).current,
     lastTap: null,
   })));
 
   const rotatePiece = (index) => {
-    setActivePieces(pieces => pieces.map((p, i) => {
+    setActivePieces(Pieces => Pieces.map((p, i) => {
       if (i !== index) return p;
       return {
         ...p,
@@ -40,7 +40,7 @@ export default function Game() {
   );
 
   const renderGrid = () => (
-    gridData[currentGrid].map((row, rowIndex) => ( //gridchoice
+    Grids[currentGrid].map((row, rowIndex) => (
       <View key={rowIndex} style={styles.row}>
         {row.map((cell, colIndex) => (
           <View
@@ -59,8 +59,8 @@ export default function Game() {
   );
 
   // dynamic calculation of gridsize
-  const gridWidth = 30 * gridData[currentGrid][0].length; //gridchoice
-  const gridHeight = 30 * gridData[currentGrid].length; //gridchoice
+  const gridWidth = 30 * Grids[currentGrid][0].length;
+  const gridHeight = 30 * Grids[currentGrid].length;
 
   return (
     <View style={styles.container}>
