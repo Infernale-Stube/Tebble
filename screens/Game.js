@@ -40,7 +40,7 @@ export default function Game() {
   );
 
   const renderGrid = () => (
-    Grids[currentGrid].map((row, rowIndex) => ( //gridchoice
+    Grids[currentGrid].map((row, rowIndex) => (
       <View key={rowIndex} style={styles.row}>
         {row.map((cell, colIndex) => (
           <View
@@ -59,8 +59,8 @@ export default function Game() {
   );
 
   // dynamic calculation of gridsize
-  const gridWidth = 30 * Grids[currentGrid][0].length; //gridchoice
-  const gridHeight = 30 * Grids[currentGrid].length; //gridchoice
+  const gridWidth = 30 * Grids[currentGrid][0].length;
+  const gridHeight = 30 * Grids[currentGrid].length;
 
   return (
     <View style={styles.container}>
