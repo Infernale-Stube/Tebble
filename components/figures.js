@@ -1,7 +1,3 @@
-import React, { useState, useRef } from 'react';
-import { View, StyleSheet, PanResponder, Animated, TouchableOpacity, Dimensions } from 'react-native';
-import { globalStyles, aboutStyles } from '../styles';
-
 export const pieces = {
   piece1: [
     [1],
