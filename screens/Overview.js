@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { globalStyles, overviewStyles } from "../styles"
 import { Pieces } from "../components/Pieces";
 
 export default function Overview() {
@@ -7,11 +8,11 @@ export default function Overview() {
   const piecesInRows = splitIntoRows(pieceKeys, 5);
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       {piecesInRows.map((row, rowIndex) => (
-        <View key={rowIndex} style={styles.row}>
+        <View key={rowIndex} style={overviewStyles.row}>
           {row.map((key) => (
-            <View key={key} style={styles.piece}>
+            <View key={key} style={overviewStyles.piece}>
               {renderPiece(Pieces[key])}
             </View>
           ))}
@@ -45,19 +46,3 @@ const renderPiece = (currentPiece) => {
     </View>
   ));
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f0f0',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
-  piece: {
-    marginRight: 10,
-  },
-});
