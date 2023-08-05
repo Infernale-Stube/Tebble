@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, PanResponder, StyleSheet, Animated } from 'react-native';
 import { Pieces } from "../components/Pieces";
 import { Grids } from "../components/Grids";
@@ -6,6 +6,9 @@ import { Grids } from "../components/Grids";
 export default function Game() {
   const pieceNames = ['piece1', 'piece2', 'piece4']; // define the pieces to be spawned
   const [currentGrid, setCurrentGrid] = useState('grid2'); // define the grid to be displayed
+
+  const [isFilled, setIsFilled] = useState(false);
+
   const [activePieces, setActivePieces] = useState(pieceNames.map(name => ({
     piece: Pieces[name],
     pan: useRef(new Animated.ValueXY()).current,
@@ -58,6 +61,33 @@ export default function Game() {
     ))
   );
 
+  const checkIfGridIsFilled = () => {
+    const activePiecesGridCells = activePieces.flatMap(p => (
+      p.piece.flatMap((row, rowIndex) => (
+        row.map((cell, cellIndex) => cell && ({
+          x: Math.round(p.pan.x._value / 30) + cellIndex,
+          y: Math.round(p.pan.y._value / 30) + rowIndex,
+        }))
+      )).filter(Boolean)
+    ));
+
+    const isGridFilled = Grids[currentGrid].every((row, rowIndex) =>
+      row.every((cell, cellIndex) =>
+        !cell || activePiecesGridCells.some(p => p.x === cellIndex && p.y === rowIndex)
+      )
+    );
+
+    setIsFilled(isGridFilled);
+
+    if (isGridFilled) {
+      console.log('Grid is filled');
+    } else {
+      console.log('Grid is not filled');
+    }
+  };
+
+  useEffect(checkIfGridIsFilled, [activePieces]);
+
   // dynamic calculation of gridsize
   const gridWidth = 30 * Grids[currentGrid][0].length;
   const gridHeight = 30 * Grids[currentGrid].length;
@@ -91,6 +121,7 @@ export default function Game() {
                 toValue: snapToValue,
                 useNativeDriver: false,
               }).start();
+              checkIfGridIsFilled();
             },
           });
           return (
