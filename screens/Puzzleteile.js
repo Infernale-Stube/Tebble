@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { pieces } from "../components/figures";
+import { Pieces } from "../components/Pieces";
 
 export default function Puzzleteile() {
-  const pieceKeys = Object.keys(pieces);
+  const pieceKeys = Object.keys(Pieces);
   const piecesInRows = splitIntoRows(pieceKeys, 5);
 
   return (
@@ -12,7 +12,7 @@ export default function Puzzleteile() {
         <View key={rowIndex} style={styles.row}>
           {row.map((key) => (
             <View key={key} style={styles.piece}>
-              {renderPiece(pieces[key])}
+              {renderPiece(Pieces[key])}
             </View>
           ))}
         </View>
