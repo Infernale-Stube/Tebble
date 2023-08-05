@@ -16,8 +16,8 @@ export default function Menu() {
     navigation.navigate('Settings');
   };
 
-  const navigateToPuzzleteile = () => {
-    navigation.navigate('Puzzleteile');
+  const navigateToOverview = () => {
+    navigation.navigate('Overview');
   };
 
   const navigateToHighscore = () => {
@@ -45,7 +45,7 @@ export default function Menu() {
           <Text style={menuStyles.buttonText}>Random Mode</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={menuStyles.button} onPress={navigateToPuzzleteile}>
+        <TouchableOpacity style={menuStyles.button} onPress={navigateToOverview}>
           <Text style={menuStyles.buttonText}>Puzzleteile Übersicht</Text>
         </TouchableOpacity>
 
