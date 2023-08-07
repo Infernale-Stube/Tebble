@@ -8,6 +8,10 @@ export default function Menu() {
 
   const navigation = useNavigation();
 
+  const navigateToCampaign = () => {
+    navigation.navigate('Campaign');
+  };
+
   const navigateToAbout = () => {
     navigation.navigate('About');
   };
@@ -36,9 +40,8 @@ export default function Menu() {
       </View>
 
       <View style={menuStyles.buttonContainer}>
-        <TouchableOpacity style={menuStyles.button}>
-        
-          <Text style={[menuStyles.buttonText, { color: "#999" }]}>Campaign Mode</Text>
+        <TouchableOpacity style={menuStyles.button} onPress={navigateToCampaign}>
+          <Text style={menuStyles.buttonText}>Campaign Mode</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={menuStyles.button} onPress={navigateToGame}>
@@ -46,7 +49,7 @@ export default function Menu() {
         </TouchableOpacity>
 
         <TouchableOpacity style={menuStyles.button} onPress={navigateToOverview}>
-          <Text style={menuStyles.buttonText}>Puzzleteile Übersicht</Text>
+          <Text style={menuStyles.buttonText}>Overview</Text>
         </TouchableOpacity>
 
        {/*  <TouchableOpacity style={menuStyles.button} onPress={navigateToHighscore}>

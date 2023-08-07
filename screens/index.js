@@ -5,3 +5,4 @@ export { default as Score } from "./Score";
 export { default as About } from "./About";
 export { default as Highscore } from "./Highscore";
 export { default as Overview } from "./Overview";
+export { default as Campaign } from "./Campaign"
