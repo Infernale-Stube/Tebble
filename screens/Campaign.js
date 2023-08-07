@@ -34,7 +34,7 @@ export default Campaign = () => {
         );
       }
       buttons.push(
-        <View key={row} style={styles.row}>
+        <View key={row} style={campaignStyles.row}>
           {rowButtons}
         </View>
       );
