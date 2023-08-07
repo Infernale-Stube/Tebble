@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { View, PanResponder, StyleSheet, Animated } from 'react-native';
 import { Pieces } from "../components/Pieces";
 import { Grids } from "../components/Grids";
+import { globalStyles, gameStyles } from '../styles';
 
 export default function Game() {
   const pieceNames = ['piece1', 'piece2', 'piece4']; // define the pieces to be spawned
@@ -44,12 +45,12 @@ export default function Game() {
 
   const renderGrid = () => (
     Grids[currentGrid].map((row, rowIndex) => (
-      <View key={rowIndex} style={styles.row}>
+      <View key={rowIndex} style={gameStyles.row}>
         {row.map((cell, colIndex) => (
           <View
             key={colIndex}
             style={[
-              styles.cell,
+              gameStyles.cell,
               {
                 backgroundColor: cell ? 'transparent' : 'transparent',
                 opacity: cell ? 1 : 0,
@@ -93,8 +94,8 @@ export default function Game() {
   const gridHeight = 30 * Grids[currentGrid].length;
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.grid, { width: gridWidth, height: gridHeight }]}>
+    <View style={[globalStyles.container, gameStyles.container]}>
+      <View style={[gameStyles.grid, { width: gridWidth, height: gridHeight }]}>
         {renderGrid()}
         {activePieces.map((p, index) => {
           const panResponder = PanResponder.create({
@@ -128,7 +129,7 @@ export default function Game() {
             <Animated.View
               key={index}
               {...panResponder.panHandlers}
-              style={[p.pan.getLayout(), styles.pieceContainer]}
+              style={[p.pan.getLayout(), gameStyles.pieceContainer]}
             >
               {renderPiece(p.piece)}
             </Animated.View>
@@ -138,28 +139,3 @@ export default function Game() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  pieceContainer: {
-    position: 'absolute',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f0f0',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  grid: {
-    width: 300,
-    height: 300,
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  cell: {
-    width: 30,
-    height: 30,
-    borderColor: 'black',
-    borderWidth: 0.5,
-  },
-});
