@@ -1,12 +1,18 @@
 import { StyleSheet } from 'react-native';
 
 const overviewStyles = StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     row: {
       flexDirection: 'row',
-      marginBottom: 20,
+      marginTop: 15,
+      marginBottom: 15,
     },
     piece: {
-      marginRight: 10,
+      marginLeft: 8,
+      marginRight: 8,
     },
   });
 
