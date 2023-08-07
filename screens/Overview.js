@@ -8,7 +8,7 @@ export default function Overview() {
   const piecesInRows = splitIntoRows(pieceKeys, 5);
 
   return (
-    <View style={globalStyles.container}>
+    <View style={[globalStyles.container, overviewStyles.container]}>
       {piecesInRows.map((row, rowIndex) => (
         <View key={rowIndex} style={overviewStyles.row}>
           {row.map((key) => (
