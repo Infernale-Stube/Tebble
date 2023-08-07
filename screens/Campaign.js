@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import { globalStyles } from '../styles';
+import { globalStyles, campaignStyles } from '../styles';
 import { useNavigation } from '@react-navigation/core';
 
-const Campaign = () => {
+export default Campaign = () => {
 
   const navigation = useNavigation();
-  
+
   const handleLevelButtonPress = (level) => {
     if (level <= 2) {
       navigation.navigate('LevelNavigator', { screen: `Level${level}` });
@@ -14,7 +14,7 @@ const Campaign = () => {
       console.log(`Level ${level} does not exist.`);
     }
   };
-  
+
   const renderLevelButtons = () => {
     const buttons = [];
     const numRows = 20;
@@ -27,9 +27,9 @@ const Campaign = () => {
         rowButtons.push(
           <TouchableOpacity
             key={level}
-            style={styles.levelButton}
+            style={campaignStyles.levelButton}
             onPress={() => handleLevelButtonPress(level)}>
-            <Text style={styles.levelButtonText}>{level}</Text>
+            <Text style={campaignStyles.levelButtonText}>{level}</Text>
           </TouchableOpacity>
         );
       }
@@ -45,39 +45,9 @@ const Campaign = () => {
 
   return (
     <View style={globalStyles.container}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView contentContainerStyle={campaignStyles.scrollViewContent}>
         {renderLevelButtons()}
       </ScrollView>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f0f0',
-  },
-  scrollViewContent: {
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  levelButton: {
-    width: 60,
-    height: 60,
-    backgroundColor: 'blue',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  levelButtonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-});
-
-export default Campaign;
