@@ -1,27 +1,27 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, PanResponder, StyleSheet, Animated } from 'react-native';
-import { Pieces } from "../components/Pieces";
-import { Grids } from "../components/Grids";
+import { View, PanResponder, Animated } from 'react-native';
+import { Grids } from '../components/Grids';
 import { globalStyles, gameStyles } from '../styles';
 
 export default function Game() {
-  const pieceNames = ['piece1', 'piece2', 'piece4']; // define the pieces to be spawned
-  const [currentGrid, setCurrentGrid] = useState('grid2'); // define the grid to be displayed
+  const [currentGrid, setCurrentGrid] = useState('grid1');
 
-  const [isFilled, setIsFilled] = useState(false);
-
-  const [activePieces, setActivePieces] = useState(pieceNames.map(name => ({
-    piece: Pieces[name],
-    pan: useRef(new Animated.ValueXY()).current,
-    lastTap: null,
-  })));
+  const [activePieces, setActivePieces] = useState(
+    Grids[currentGrid].pieces.map(piece => ({
+      piece,
+      pan: useRef(new Animated.ValueXY()).current,
+      lastTap: null,
+    }))
+  );
 
   const rotatePiece = (index) => {
-    setActivePieces(Pieces => Pieces.map((p, i) => {
+    setActivePieces(activePieces.map((p, i) => {
       if (i !== index) return p;
       return {
         ...p,
-        piece: p.piece.map((row, rowIndex) => p.piece.map((col) => col[rowIndex])).reverse()
+        piece: p.piece.map((row, rowIndex) =>
+          p.piece.map((col) => col[rowIndex])
+        ).reverse()
       };
     }));
   };
@@ -35,7 +35,7 @@ export default function Game() {
             style={{
               width: 30,
               height: 30,
-              backgroundColor: cell ? 'red' : 'transparent', // define color of pieces
+              backgroundColor: cell ? 'red' : 'transparent',
             }}
           />
         ))}
@@ -44,7 +44,7 @@ export default function Game() {
   );
 
   const renderGrid = () => (
-    Grids[currentGrid].map((row, rowIndex) => (
+    Grids[currentGrid].grid.map((row, rowIndex) => (
       <View key={rowIndex} style={gameStyles.row}>
         {row.map((cell, colIndex) => (
           <View
@@ -63,35 +63,34 @@ export default function Game() {
   );
 
   const checkIfGridIsFilled = () => {
-    const activePiecesGridCells = activePieces.flatMap(p => (
-      p.piece.flatMap((row, rowIndex) => (
+    const activePiecesGridCells = activePieces.flatMap(p =>
+      p.piece.flatMap((row, rowIndex) =>
         row.map((cell, cellIndex) => cell && ({
           x: Math.round(p.pan.x._value / 30) + cellIndex,
           y: Math.round(p.pan.y._value / 30) + rowIndex,
         }))
-      )).filter(Boolean)
-    ));
+      ).filter(Boolean)
+    );
 
-    const isGridFilled = Grids[currentGrid].every((row, rowIndex) =>
+    const isGridFilled = Grids[currentGrid].grid.every((row, rowIndex) =>
       row.every((cell, cellIndex) =>
         !cell || activePiecesGridCells.some(p => p.x === cellIndex && p.y === rowIndex)
       )
     );
 
-    setIsFilled(isGridFilled);
+    return isGridFilled;
+  };
 
-    if (isGridFilled) {
+  useEffect(() => {
+    if (checkIfGridIsFilled()) {
       console.log('Grid is filled');
     } else {
       console.log('Grid is not filled');
     }
-  };
+  }, [activePieces]);
 
-  useEffect(checkIfGridIsFilled, [activePieces]);
-
-  // dynamic calculation of gridsize
-  const gridWidth = 30 * Grids[currentGrid][0].length;
-  const gridHeight = 30 * Grids[currentGrid].length;
+  const gridWidth = 30 * Grids[currentGrid].grid[0].length;
+  const gridHeight = 30 * Grids[currentGrid].grid.length;
 
   return (
     <View style={[globalStyles.container, gameStyles.container]}>
@@ -122,7 +121,11 @@ export default function Game() {
                 toValue: snapToValue,
                 useNativeDriver: false,
               }).start();
-              checkIfGridIsFilled();
+              if (checkIfGridIsFilled()) {
+                console.log('Grid is filled');
+              } else {
+                console.log('Grid is not filled');
+              }
             },
           });
           return (
