@@ -13,7 +13,7 @@ export default function Overview() {
         <View key={rowIndex} style={overviewStyles.row}>
           {row.map((key) => (
             <View key={key} style={overviewStyles.piece}>
-              {renderPiece(Pieces[key].shape, Pieces[key].color)}
+              {renderPiece(Pieces[key])}
             </View>
           ))}
         </View>
@@ -30,8 +30,8 @@ const splitIntoRows = (arr, size) => {
   return result;
 };
 
-const renderPiece = (shape, color) => {
-  return shape.map((row, rowIndex) => (
+const renderPiece = (currentPiece) => {
+  return currentPiece.map((row, rowIndex) => (
     <View key={rowIndex} style={{ flexDirection: 'row' }}>
       {row.map((cell, colIndex) => (
         <View
@@ -39,10 +39,10 @@ const renderPiece = (shape, color) => {
           style={{
             width: 25,
             height: 25,
-            backgroundColor: cell ? color : 'transparent',
+            backgroundColor: cell ? 'red' : 'transparent',
           }}
         />
       ))}
     </View>
   ));
-}
+};
