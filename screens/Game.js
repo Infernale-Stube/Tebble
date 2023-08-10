@@ -35,7 +35,7 @@ export default function Game() {
             style={{
               width: 30,
               height: 30,
-              backgroundColor: cell ? 'red' : 'transparent',
+              backgroundColor: cell ? '#FF5733' : 'transparent',
             }}
           />
         ))}

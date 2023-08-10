@@ -39,7 +39,7 @@ const renderPiece = (currentPiece) => {
           style={{
             width: 25,
             height: 25,
-            backgroundColor: cell ? 'red' : 'transparent',
+            backgroundColor: cell ? '#FF5733' : 'transparent',
           }}
         />
       ))}
