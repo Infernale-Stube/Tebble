@@ -1,15 +1,15 @@
-
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { globalStyles, menuStyles } from "../styles"
+import { View, TouchableOpacity, Image, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { globalStyles, menuStyles } from "../styles";
 import { useNavigation } from '@react-navigation/native';
 
 export default function Menu() {
 
   const navigation = useNavigation();
 
-  const navigateToCampaign = () => {
-    navigation.navigate('Campaign');
+  const navigateToPlay = () => {
+    navigation.navigate('Play');
   };
 
   const navigateToAbout = () => {
@@ -28,10 +28,6 @@ export default function Menu() {
     navigation.navigate('Highscore');
   };
 
-  const navigateToGame = () => {
-    navigation.navigate('Game');
-  };
-
   return (
     <View style={globalStyles.container}>
       <View style={menuStyles.logoTitleContainer}>
@@ -39,30 +35,28 @@ export default function Menu() {
         <Text style={menuStyles.title}>Tebble</Text>
       </View>
 
-      <View style={menuStyles.buttonContainer}>
-        <TouchableOpacity style={menuStyles.button} onPress={navigateToCampaign}>
-          <Text style={menuStyles.buttonText}>Campaign Mode</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={menuStyles.button} onPress={navigateToGame}>
-          <Text style={menuStyles.buttonText}>Random Mode</Text>
+      <View style={menuStyles.primaryButtonContainer}>
+        <TouchableOpacity style={menuStyles.button} onPress={navigateToPlay}>
+          <Text style={menuStyles.buttonText}>Play</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={menuStyles.button} onPress={navigateToOverview}>
           <Text style={menuStyles.buttonText}>Overview</Text>
         </TouchableOpacity>
 
-        {/*  <TouchableOpacity style={menuStyles.button} onPress={navigateToHighscore}>
+        <TouchableOpacity style={menuStyles.button} onPress={navigateToHighscore}>
           <Text style={menuStyles.buttonText}>Highscore</Text>
-        </TouchableOpacity> //--> findet Screen Highscore nicht */}
+        </TouchableOpacity>
+      </View>
 
-        {/*  <TouchableOpacity style={menuStyles.button} onPress={navigateToAbout}>
-          <Text style={menuStyles.buttonText}>About</Text>
+      <View style={menuStyles.secondaryButtonContainer}>
+        <TouchableOpacity onPress={navigateToAbout}>
+          <Ionicons name="information-circle" size={50} color="#FF5733" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={menuStyles.button} onPress={navigateToSettings}>
-          <Text style={menuStyles.buttonText}>Settings</Text>
-        </TouchableOpacity> */}
+        <TouchableOpacity onPress={navigateToSettings}>
+          <Ionicons name="settings" size={50} color="#FF5733" />
+        </TouchableOpacity>
       </View>
     </View>
   );

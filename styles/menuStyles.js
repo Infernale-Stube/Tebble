@@ -1,11 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 const menuStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
   logoTitleContainer: {
+    flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: 50,
@@ -16,27 +13,40 @@ const menuStyles = StyleSheet.create({
   },
   title: {
     fontFamily: "BungeeSpice",
-    fontSize: 50,
+    fontSize: 55,
   },
-  buttonContainer: {
+  primaryButtonContainer: {
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  secondaryButtonContainer: {
+    flex: 0.5,
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    paddingLeft: 25,
+    paddingRight: 25,
+  },
   button: {
-    width: 250,
+    width: 230,
     height: 60,
-    backgroundColor: '#000',
+    backgroundColor: '#FF5733',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 15,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: '#fff',
+    borderRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });
