@@ -6,7 +6,6 @@ const menuStyles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   logoTitleContainer: {
-    backgroundColor: '#ffbd84',
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: 50,
@@ -21,7 +20,6 @@ const menuStyles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 3,
-    backgroundColor: '#ffbd84',
     alignItems: 'center',
     justifyContent: 'center',
   },
