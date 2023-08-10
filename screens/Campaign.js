@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-nati
 import { globalStyles, campaignStyles } from '../styles';
 import { useNavigation } from '@react-navigation/core';
 
-export default Campaign = () => {
+export default function Campaign() {
 
   const navigation = useNavigation();
 
