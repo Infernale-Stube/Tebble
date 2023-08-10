@@ -31,11 +31,11 @@ export default function Menu() {
   const navigateToGame = () => {
     navigation.navigate('Game');
   };
-  
+
   return (
     <View style={globalStyles.container}>
       <View style={menuStyles.logoTitleContainer}>
-        <Image source={require('../assets/images/placeholder.png')} style={menuStyles.logo}/>
+        <Image source={require('../assets/icon.png')} style={menuStyles.logo} />
         <Text style={menuStyles.title}>Tebble</Text>
       </View>
 
@@ -52,11 +52,11 @@ export default function Menu() {
           <Text style={menuStyles.buttonText}>Overview</Text>
         </TouchableOpacity>
 
-       {/*  <TouchableOpacity style={menuStyles.button} onPress={navigateToHighscore}>
+        {/*  <TouchableOpacity style={menuStyles.button} onPress={navigateToHighscore}>
           <Text style={menuStyles.buttonText}>Highscore</Text>
         </TouchableOpacity> //--> findet Screen Highscore nicht */}
 
-       {/*  <TouchableOpacity style={menuStyles.button} onPress={navigateToAbout}>
+        {/*  <TouchableOpacity style={menuStyles.button} onPress={navigateToAbout}>
           <Text style={menuStyles.buttonText}>About</Text>
         </TouchableOpacity>
 
