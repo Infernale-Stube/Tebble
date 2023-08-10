@@ -12,19 +12,29 @@ const campaignStyles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 10,
+        alignItems: 'center',
+        marginBottom: 20,
     },
     levelButton: {
         width: 60,
         height: 60,
-        backgroundColor: 'blue',
+        backgroundColor: '#FF5733',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
+        borderRadius: 20,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     levelButtonText: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 });
 
