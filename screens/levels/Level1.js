@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { View, PanResponder, Animated } from 'react-native';
 import { Grids } from '../../components/Grids';
 import { globalStyles, gameStyles } from '../../styles';
+import { unlockNextLevel } from "../../functions/levelStorage";
 
 export default function Level1() {
   const [currentGrid, setCurrentGrid] = useState('grid2');
@@ -81,14 +82,6 @@ export default function Level1() {
     return isGridFilled;
   };
 
-  useEffect(() => {
-    if (checkIfGridIsFilled()) {
-      console.log('Grid is filled');
-    } else {
-      console.log('Grid is not filled');
-    }
-  }, [activePieces]);
-
   const gridWidth = 30 * Grids[currentGrid].grid[0].length;
   const gridHeight = 30 * Grids[currentGrid].grid.length;
 
@@ -122,6 +115,7 @@ export default function Level1() {
                 useNativeDriver: false,
               }).start();
               if (checkIfGridIsFilled()) {
+                unlockNextLevel();
                 console.log('Grid is filled');
               } else {
                 console.log('Grid is not filled');
