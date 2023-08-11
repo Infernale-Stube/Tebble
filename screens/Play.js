@@ -32,9 +32,10 @@ export default function Play() {
           <Text style={menuStyles.buttonText}>Campaign</Text>
         </TouchableOpacity>
 
+        {/*
         <TouchableOpacity style={menuStyles.button} onPress={navigateToChallenge}>
           <Text style={menuStyles.buttonText}>Challenge</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
       </View>
 
       <View style={menuStyles.secondaryButtonContainer}>

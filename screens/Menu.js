@@ -44,9 +44,10 @@ export default function Menu() {
           <Text style={menuStyles.buttonText}>Overview</Text>
         </TouchableOpacity>
 
+        {/*
         <TouchableOpacity style={menuStyles.button} onPress={navigateToHighscore}>
           <Text style={menuStyles.buttonText}>Highscore</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
       </View>
 
       <View style={menuStyles.secondaryButtonContainer}>
