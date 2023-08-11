@@ -1,13 +1,28 @@
 import { StyleSheet } from "react-native";
 
 const campaignStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f0f0f0',
+    headlineContainer: {
+        flex: 0.5,
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: 100,
+    },
+    headline: {
+        fontSize: 18,
+    },
+    scrollViewContainer: {
+        flex: 4,
+    },
+    bottomButtonContainer: {
+        flex: 0.5,
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        paddingLeft: 25,
+        paddingRight: 25,
     },
     scrollViewContent: {
         paddingVertical: 20,
-        paddingHorizontal: 10,
+        paddingHorizontal: 35,
     },
     row: {
         flexDirection: 'row',
@@ -31,10 +46,17 @@ const campaignStyles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
+    disabledButton: {
+        backgroundColor: 'grey',
+        opacity: 0.5,
+    },
     levelButtonText: {
         color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    disabledButtonText: {
+        color: 'black',
     },
 });
 
