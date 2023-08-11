@@ -1,35 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { globalStyles, campaignStyles, menuStyles } from '../styles';
+import { globalStyles, campaignStyles } from '../styles';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setInitialLevel } from '../functions/levelStorage';
 
 export default function Campaign() {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [currentLevel, setCurrentLevel] = useState(1);
 
   const navigateToPlay = () => {
     navigation.navigate('Play');
   };
 
-  useEffect(() => {
-    const fetchCurrentLevel = async () => {
-      try {
-        await setInitialLevel();
+  const fetchCurrentLevel = async () => {
+    try {
+      await setInitialLevel();
 
-        const storedLevel = await AsyncStorage.getItem('currentLevel');
-        if (storedLevel !== null) {
-          setCurrentLevel(parseInt(storedLevel, 10));
-        }
-      } catch (error) {
-        console.error('Error fetching current level:', error);
+      const storedLevel = await AsyncStorage.getItem('currentLevel');
+      if (storedLevel !== null) {
+        setCurrentLevel(parseInt(storedLevel, 10));
       }
-    };
+    } catch (error) {
+      console.error('Error fetching current level:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchCurrentLevel();
   }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      fetchCurrentLevel();
+    }
+  }, [isFocused]);
 
   const handleLevelButtonPress = (level) => {
     if (level <= currentLevel) {
@@ -80,7 +87,6 @@ export default function Campaign() {
 
   return (
     <View style={globalStyles.container}>
-
       <View style={campaignStyles.headlineContainer}>
         <Text style={campaignStyles.headline}>Campaign Overview</Text>
       </View>
@@ -98,5 +104,4 @@ export default function Campaign() {
       </View>
     </View>
   );
-
 }
