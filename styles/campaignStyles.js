@@ -9,6 +9,7 @@ const campaignStyles = StyleSheet.create({
     },
     headline: {
         fontSize: 18,
+        fontFamily: "BungeeSpice",
     },
     scrollViewContainer: {
         flex: 4,
